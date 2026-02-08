@@ -1,9 +1,31 @@
+import { useEffect, useState } from 'react'
 import './App.css'
 import ProductCard from './components/ProductCard'
 
 function App() {
+
+  const [products, setProducts] = useState([])
+
+  useEffect(() => {
+    fetch('https://api.escuelajs.co/api/v1/products').then(res => res.json()).then(data => {
+      console.log('data',data)
+      setProducts(data)
+    })
+  }, [])
+
   return (
     <>
+      {products.map(product => {
+        return (
+          <ProductCard 
+            title={product.title}
+            price={product.price}
+            description={product.description}
+            imageUrl={product.images[0]}
+          />
+        )
+      })}
+
       <ProductCard 
         title= "Zapatillas Runing"
         price="120"
