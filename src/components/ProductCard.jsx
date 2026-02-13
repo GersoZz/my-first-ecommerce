@@ -1,28 +1,22 @@
-import { useState } from 'react';
+import { useState } from 'react'
 import './ProductCard.css'
 
-function ProductCard({title, price, description, imageUrl = 'https://picsum.photos/600/400'}) {
-
+function ProductCard({ title, price, description, imageUrl = 'https://picsum.photos/600/400' }) {
   const [isAdded, setIsAdded] = useState(false)
   console.log('isAdded', isAdded)
 
   return (
     <div id="card-01" className="card">
-      <img
-        src={imageUrl}
-        alt={title}
-        className="card-image"
-      />
+      <img src={imageUrl} alt={title} className="card-image" />
 
       <div className="card-content">
         <h3 className="card-title">{title}</h3>
-        <p className="card-text">
-          {description}
-        </p>
+        <p className="card-text">{description}</p>
 
         <div className="card-footer">
           <span className="card-price">${price}</span>
-          <button className={`card-button ${isAdded ? 'added' : ''}`}
+          <button
+            className={`card-button ${isAdded ? 'added' : ''}`}
             onClick={() => setIsAdded(isAdded === true ? false : true)} /* !isAdded */
           >
             {isAdded ? 'Agregado' : 'Agregar'}
@@ -30,7 +24,7 @@ function ProductCard({title, price, description, imageUrl = 'https://picsum.phot
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default ProductCard;
+export default ProductCard
