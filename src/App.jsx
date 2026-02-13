@@ -8,14 +8,20 @@ function App() {
         title= "Zapatillas Runing"
         price="120"
         description="Las mejores zapatillas"
-        imageUrl="https://picsum.photos/600/400"
+        imageUrl="https://images.unsplash.com/photo-1542291026-7eec264c27ff"
       />
 
       <ProductCard 
         title="Reloj de Tiempo"
         price="200"
         description="El mejor reloj de Tiempo"
-        imageUrl="https://picsum.photos/600/400?random=2"
+        imageUrl="https://images.unsplash.com/photo-1563861826100-9cb868fdbe1c"
+      />
+
+      <ProductCard 
+        title="Mouse RGB"
+        price="100"
+        description="El mejor mouse RGB"
       />
     </>
   )

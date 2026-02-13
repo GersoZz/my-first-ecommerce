@@ -1,6 +1,6 @@
 import './ProductCard.css'
 
-function ProductCard({title, price, description, imageUrl}) {
+function ProductCard({title, price, description, imageUrl = 'https://picsum.photos/600/400'}) {
   return (
     <div id="card-01" className="card">
       <img
