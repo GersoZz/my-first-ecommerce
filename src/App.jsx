@@ -2,8 +2,10 @@ import { useState } from 'react'
 import './App.css'
 import ProductCard from './components/ProductCard'
 import PromoBanner from './components/PromoBanner'
+import Header from './components/Header'
 
 function App() {
+  const [cartCount, setCartCount] = useState(0)
   const [showPromo, setShowPromo] = useState(true)
 
   const productsData = [
@@ -30,8 +32,19 @@ function App() {
     setShowPromo(false)
   }
 
+  const handleAddToCart = (isAdded) => {
+    if (isAdded === true) {
+      setCartCount((count) => count + 1)
+    }
+
+    if (isAdded === false) {
+      setCartCount((count) => count - 1)
+    }
+  }
+
   return (
     <>
+      <Header cartCount={cartCount} />
       {showPromo && <PromoBanner onClose={onClose} />}
 
       <div className="card-list">
@@ -42,6 +55,7 @@ function App() {
             price={product.price}
             description={product.description}
             imageUrl={product.imageUrl}
+            handleAddToCart={handleAddToCart}
           />
         ))}
       </div>

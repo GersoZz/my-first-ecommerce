@@ -1,9 +1,14 @@
 import { useState } from 'react'
 import './ProductCard.css'
 
-function ProductCard({ title, price, description, imageUrl = 'https://picsum.photos/600/400' }) {
+function ProductCard({ title, price, description, imageUrl = 'https://picsum.photos/600/400', handleAddToCart }) {
   const [isAdded, setIsAdded] = useState(false)
   console.log('isAdded', isAdded)
+
+  const handleClick = () => {
+    setIsAdded((isAdded) => !isAdded)
+    handleAddToCart(!isAdded)
+  }
 
   return (
     <div id="card-01" className="card">
@@ -15,10 +20,7 @@ function ProductCard({ title, price, description, imageUrl = 'https://picsum.pho
 
         <div className="card-footer">
           <span className="card-price">${price}</span>
-          <button
-            className={`card-button ${isAdded ? 'added' : ''}`}
-            onClick={() => setIsAdded(isAdded === true ? false : true)} /* !isAdded */
-          >
+          <button className={`card-button ${isAdded ? 'added' : ''}`} onClick={() => handleClick()} /* !isAdded */>
             {isAdded ? 'Agregado' : 'Agregar'}
           </button>
         </div>
