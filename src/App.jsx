@@ -57,7 +57,7 @@ function App() {
 
       <Container title="Productos sugeridos">
         <p style={{ textAlign: 'center', marginBottom: '1rem' }}>Explora nuestra selección de productos</p>
-        <ProductList productsData={productsData} handleAddToCart={handleAddToCart} />
+        <ProductList productsData={productsData.slice(0, 2)} handleAddToCart={handleAddToCart} />
       </Container>
     </>
   )
