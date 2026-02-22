@@ -1,23 +1,32 @@
 .header {
-  background: aquamarine;
+  --height: var(--header-height, 64px);
+  height: var(--height);
+  background: linear-gradient(90deg, #4ade80 0%, #06b6d4 100%);
   color: black;
-  padding: 1rem 2rem;
-  position: sticky;
+  padding: 0 2rem;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
 }
 
 .header-container {
   max-width: 1280px;
   margin: 0 auto;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 100%;
 }
 
 .header-logo {
   margin: 0;
-  font-size: 1.8rem;
-  font-weight: bold;
+  font-size: 1.4rem;
+  font-weight: 800;
   letter-spacing: 0.5px;
 }
 
