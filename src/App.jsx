@@ -6,7 +6,6 @@ import ProductList from './components/ProductList'
 import Container from './components/Container'
 
 function App() {
-  const [cartCount, setCartCount] = useState(0)
   const [showPromo, setShowPromo] = useState(true)
 
   const productsData = [
@@ -36,28 +35,18 @@ function App() {
     setShowPromo(false)
   }
 
-  const handleAddToCart = (isAdded) => {
-    if (isAdded === true) {
-      setCartCount((count) => count + 1)
-    }
-
-    if (isAdded === false) {
-      setCartCount((count) => count - 1)
-    }
-  }
-
   return (
     <>
-      <Header cartCount={cartCount} />
+      <Header />
       {showPromo && <PromoBanner onClose={onClose} />}
       <Container title="Productos disponibles">
         <p style={{ textAlign: 'center', marginBottom: '1rem' }}>Estos son los productos que puedes comprar</p>
-        <ProductList productsData={productsData} handleAddToCart={handleAddToCart} />
+        <ProductList productsData={productsData} />
       </Container>
 
       <Container title="Productos sugeridos">
         <p style={{ textAlign: 'center', marginBottom: '1rem' }}>Explora nuestra selección de productos</p>
-        <ProductList productsData={productsData.slice(0, 2)} handleAddToCart={handleAddToCart} />
+        <ProductList productsData={productsData.slice(0, 2)} />
       </Container>
     </>
   )
