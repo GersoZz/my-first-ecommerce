@@ -3,6 +3,7 @@ import './App.css'
 import PromoBanner from './components/PromoBanner'
 import Header from './components/Header'
 import ProductList from './components/ProductList'
+import Container from './components/Container'
 
 function App() {
   const [cartCount, setCartCount] = useState(0)
@@ -49,7 +50,15 @@ function App() {
     <>
       <Header cartCount={cartCount} />
       {showPromo && <PromoBanner onClose={onClose} />}
-      <ProductList productsData={productsData} handleAddToCart={handleAddToCart} />
+      <Container title="Productos disponibles">
+        <p style={{ textAlign: 'center', marginBottom: '1rem' }}>Estos son los productos que puedes comprar</p>
+        <ProductList productsData={productsData} handleAddToCart={handleAddToCart} />
+      </Container>
+
+      <Container title="Productos sugeridos">
+        <p style={{ textAlign: 'center', marginBottom: '1rem' }}>Explora nuestra selección de productos</p>
+        <ProductList productsData={productsData} handleAddToCart={handleAddToCart} />
+      </Container>
     </>
   )
 }
