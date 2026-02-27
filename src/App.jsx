@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import './App.css'
 import PromoBanner from './components/PromoBanner'
 import Header from './components/Header'
@@ -6,49 +6,26 @@ import ProductList from './components/ProductList'
 import Container from './components/Container'
 import { productsAdapter } from './adapters/products.adapter'
 import Loader from './components/Loader'
+import useFetch from './hooks/useFetch'
 
 function App() {
   const [showPromo, setShowPromo] = useState(true)
 
-  const [productsData, setProductsData] = useState([])
-  const [productsSuggestedData, setProductsSuggestedData] = useState([])
-  const [productsSnacksData, setProductsSnacksData] = useState([])
+  const { data: productsRawData, isLoading: isLoadingProducts } = useFetch(
+    'https://api.escuelajs.co/api/v1/products?offset=0&limit=6',
+  )
 
-  const [isLoading, setIsLoading] = useState(true)
-  const [isLoadingSuggested, setIsLoadingSuggested] = useState(true)
-  const [isLoadingSnacks, setIsLoadingSnacks] = useState(true)
+  const { data: suggestedRawData, isLoading: isLoadingSuggested } = useFetch(
+    'https://api.escuelajs.co/api/v1/products?offset=6&limit=2',
+  )
 
-  useEffect(() => {
-    // Productos Disponibles
-    fetch('https://api.escuelajs.co/api/v1/products?offset=0&limit=6')
-      .then((response) => response.json())
-      .then((data) => {
-        const productsAdapteds = data.map(productsAdapter)
-        setProductsData(productsAdapteds)
-      })
-      .catch((error) => console.error(error))
-      .finally(() => setIsLoading(false))
+  const { data: snacksRawData, isLoading: isLoadingSnacks } = useFetch(
+    'https://api.escuelajs.co/api/v1/categories/19/products?offset=0&limit=6',
+  )
 
-    // Productos Sugeridos
-    fetch('https://api.escuelajs.co/api/v1/products?offset=6&limit=2')
-      .then((response) => response.json())
-      .then((data) => {
-        const productsAdapteds = data.map(productsAdapter)
-        setProductsSuggestedData(productsAdapteds)
-      })
-      .catch((error) => console.error(error))
-      .finally(() => setIsLoadingSuggested(false))
-
-    // Productos Snacks
-    fetch('https://api.escuelajs.co/api/v1/categories/19/products?offset=0&limit=6')
-      .then((response) => response.json())
-      .then((data) => {
-        const productsAdapteds = data.map(productsAdapter)
-        setProductsSnacksData(productsAdapteds)
-      })
-      .catch((error) => console.error(error))
-      .finally(() => setIsLoadingSnacks(false))
-  }, [])
+  const productsData = productsRawData ? productsRawData.map(productsAdapter) : []
+  const productsSuggestedData = suggestedRawData ? suggestedRawData.map(productsAdapter) : []
+  const productsSnacksData = snacksRawData ? snacksRawData.map(productsAdapter) : []
 
   const onClose = () => {
     setShowPromo(false)
@@ -60,7 +37,7 @@ function App() {
       {showPromo && <PromoBanner onClose={onClose} />}
       <Container title="Productos disponibles">
         <p style={{ textAlign: 'center', marginBottom: '1rem' }}>Estos son los productos que puedes comprar</p>
-        {isLoading ? <Loader /> : <ProductList productsData={productsData} />}
+        {isLoadingProducts ? <Loader /> : <ProductList productsData={productsData} />}
       </Container>
 
       <Container title="Productos sugeridos">
