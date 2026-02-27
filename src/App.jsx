@@ -15,6 +15,8 @@ function App() {
   const [productsSnacksData, setProductsSnacksData] = useState([])
 
   const [isLoading, setIsLoading] = useState(true)
+  const [isLoadingSuggested, setIsLoadingSuggested] = useState(true)
+  const [isLoadingSnacks, setIsLoadingSnacks] = useState(true)
 
   useEffect(() => {
     // Productos Disponibles
@@ -35,7 +37,7 @@ function App() {
         setProductsSuggestedData(productsAdapteds)
       })
       .catch((error) => console.error(error))
-      .finally(() => setIsLoading(false))
+      .finally(() => setIsLoadingSuggested(false))
 
     // Productos Snacks
     fetch('https://api.escuelajs.co/api/v1/categories/19/products?offset=0&limit=6')
@@ -45,7 +47,7 @@ function App() {
         setProductsSnacksData(productsAdapteds)
       })
       .catch((error) => console.error(error))
-      .finally(() => setIsLoading(false))
+      .finally(() => setIsLoadingSnacks(false))
   }, [])
 
   const onClose = () => {
@@ -63,12 +65,12 @@ function App() {
 
       <Container title="Productos sugeridos">
         <p style={{ textAlign: 'center', marginBottom: '1rem' }}>Explora nuestra selección de productos</p>
-        {isLoading ? <Loader /> : <ProductList productsData={productsSuggestedData} />}
+        {isLoadingSuggested ? <Loader /> : <ProductList productsData={productsSuggestedData} />}
       </Container>
 
       <Container title="Productos snacks">
         <p style={{ textAlign: 'center', marginBottom: '1rem' }}>Explora nuestra selección de snacks</p>
-        {isLoading ? <Loader /> : <ProductList productsData={productsSnacksData} />}
+        {isLoadingSnacks ? <Loader /> : <ProductList productsData={productsSnacksData} />}
       </Container>
     </>
   )
