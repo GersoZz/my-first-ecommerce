@@ -9,6 +9,11 @@ function useFetch(url) {
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
+        const dataIsArray = Array.isArray(data)
+        if (dataIsArray && data.length === 0) {
+          throw new Error('Data is not an array')
+        }
+
         setData(data)
       })
       .catch((error) => {
