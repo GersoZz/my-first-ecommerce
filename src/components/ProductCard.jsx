@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react'
 import { CartContext } from '../context/CartContext'
 import './ProductCard.css'
+import { Link } from 'react-router-dom'
 
 function ProductCard({ id, title, price, description, imageUrl = 'https://picsum.photos/600/400' }) {
   const { handleAddToCart } = useContext(CartContext)
@@ -15,7 +16,9 @@ function ProductCard({ id, title, price, description, imageUrl = 'https://picsum
 
   return (
     <div id={`card-${id}`} className="card">
-      <img src={imageUrl} alt={title} className="card-image" />
+      <Link to={`/product/${id}`} className="card-link">
+        <img src={imageUrl} alt={title} className="card-image" />
+      </Link>
 
       <div className="card-content">
         <h3 className="card-title">{title}</h3>
