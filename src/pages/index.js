@@ -11,4 +11,6 @@ export const CartPage = React.lazy(async () => {
   return import('./CartPage')
 })
 
+export const NotFoundPage = React.lazy(() => import('./NotFoundPage'))
+
 export { HomePage }
