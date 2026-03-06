@@ -1,6 +1,13 @@
 import './AddProductPage.css'
+import { API_ENDPOINTS } from '../utils/constants'
+import useFetch from '../hooks/useFetch'
 
 function AddProductPage() {
+  const { data, isLoading: loadingCategories, error } = useFetch(API_ENDPOINTS.CATEGORIES)
+
+  const categories = Array.isArray(data) ? data : []
+  const categoriesError = error ? 'Error al cargar categorías' : null
+
   return (
     <div className="add-product-page">
       <div className="add-product-card">
@@ -23,14 +30,19 @@ function AddProductPage() {
               <label htmlFor="categoryId">Categoría</label>
               <select id="categoryId" name="categoryId" defaultValue="" required>
                 <option value="" disabled>
-                  Selecciona una categoría
+                  {loadingCategories
+                    ? 'Cargando categorías...'
+                    : error
+                      ? 'Error al cargar categorías'
+                      : 'Selecciona una categoría'}
                 </option>
-                <option value="1">Ropa</option>
-                <option value="2">Electrónica</option>
-                <option value="3">Muebles</option>
-                <option value="4">Zapatos</option>
-                <option value="5">Otros</option>
+                {categories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
               </select>
+              {categoriesError && <p className="form-helper error">{categoriesError}</p>}
             </div>
             <div className="form-field form-field-full">
               <label htmlFor="description">Descripción</label>
