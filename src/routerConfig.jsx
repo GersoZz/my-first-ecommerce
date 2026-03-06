@@ -6,35 +6,18 @@ const routerConfig = [
   {
     element: <Layout />,
     children: [
-      {
-        path: '/',
-        element: <HomePage />,
-      },
-      {
-        path: '/product/:productId',
-        element: <ProductDetailPage />,
-      },
-      {
-        path: '/about',
-        element: <AboutPage />,
-      },
-      {
-        path: '/add-product',
-        element: <AddProductPage />,
-      },
-      {
-        path: '*',
-        element: <NotFoundPage />,
-      },
+      { path: '/', element: <HomePage /> },
+      { path: '/product/:productId', element: <ProductDetailPage /> },
+      { path: '/about', element: <AboutPage /> },
+      { path: '/add-product', element: <AddProductPage /> },
+      { path: '*', element: <NotFoundPage /> },
     ],
   },
   {
     element: <CartLayout />,
     children: [
-      {
-        path: '/cart',
-        element: <CartPage />,
-      },
+      // prettier-ignore
+      { path: '/cart', element: <CartPage /> },
     ],
   },
 ]
