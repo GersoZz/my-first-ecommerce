@@ -1,6 +1,14 @@
 import Layout from './components/Layout'
 import CartLayout from './components/CartLayout'
-import { HomePage, AboutPage, AddProductPage, CartPage, NotFoundPage, ProductDetailPage } from './pages'
+import {
+  HomePage,
+  AboutPage,
+  AddProductPage,
+  CartPage,
+  NotFoundPage,
+  ProductDetailPage,
+  SearchResultsPage,
+} from './pages'
 
 const routerConfig = [
   {
@@ -10,6 +18,7 @@ const routerConfig = [
       { path: '/product/:productId', element: <ProductDetailPage /> },
       { path: '/about', element: <AboutPage /> },
       { path: '/add-product', element: <AddProductPage /> },
+      { path: '/search', element: <SearchResultsPage /> },
       { path: '*', element: <NotFoundPage /> },
     ],
   },
