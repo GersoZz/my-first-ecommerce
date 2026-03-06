@@ -1,12 +1,23 @@
 import './AddProductPage.css'
 import { API_ENDPOINTS } from '../utils/constants'
 import useFetch from '../hooks/useFetch'
+import usePost from '../hooks/usePost'
+import { useEffect, useState } from 'react'
 
 function AddProductPage() {
   const { data, isLoading: loadingCategories, error } = useFetch(API_ENDPOINTS.CATEGORIES)
 
   const categories = Array.isArray(data) ? data : []
   const categoriesError = error ? 'Error al cargar categorías' : null
+
+  const [formKey, setFormKey] = useState(0)
+
+  const {
+    execute: createProduct,
+    data: createdProduct,
+    loading: submitting,
+    error: submitError,
+  } = usePost(API_ENDPOINTS.PRODUCTS)
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -17,11 +28,17 @@ function AddProductPage() {
       price: parseFloat(formData.get('price')),
       categoryId: formData.get('categoryId'),
       description: formData.get('description'),
-      imageUrl: formData.get('imageUrl'),
+      images: [formData.get('imageUrl')],
     }
 
     console.log('Producto a guardar:', productData)
+    createProduct(productData)
   }
+
+  useEffect(() => {
+    if (!createdProduct) return
+    setFormKey((prevKey) => prevKey + 1)
+  }, [createdProduct])
 
   return (
     <div className="add-product-page">
@@ -31,7 +48,7 @@ function AddProductPage() {
           <h1>Agregar nuevo producto</h1>
           <p className="add-product-subtitle">Completa los datos del producto para publicarlo en la tienda.</p>
         </div>
-        <form className="add-product-form" onSubmit={handleSubmit}>
+        <form className="add-product-form" onSubmit={handleSubmit} key={formKey}>
           <div className="form-grid">
             <div className="form-field">
               <label htmlFor="title">Título</label>
@@ -75,13 +92,17 @@ function AddProductPage() {
             </div>
           </div>
           <div className="form-actions">
-            <button type="submit" className="primary-button">
-              Guardar producto
+            <button type="submit" className="primary-button" disabled={submitting}>
+              {submitting ? 'Guardando...' : 'Guardar Producto'}
             </button>
-            <button type="reset" className="secondary-button">
+            <button type="reset" className="secondary-button" disabled={submitting}>
               Limpiar
             </button>
           </div>
+          {createdProduct && !submitting && (
+            <div className="submit-message success">✓ Producto creado exitosamente</div>
+          )}
+          {submitError && <div className="submit-message error">✗ {submitError.message}</div>}
         </form>
       </div>
     </div>
