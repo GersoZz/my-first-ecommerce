@@ -22,6 +22,7 @@ function AboutPage() {
   return (
     <div>
       <h1>About Page</h1>
+      <h1 className="text-3xl font-bold underline">Hello world!</h1>
       <NavBarButtons>
         <li>Home</li>
         <li>About</li>
