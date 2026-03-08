@@ -13,6 +13,7 @@ function AddProductPage() {
   const [formKey, setFormKey] = useState(0)
   const [titleValue, setTitleValue] = useState('')
   const [titleError, setTitleError] = useState('')
+  const [titleTouched, setTitleTouched] = useState(false)
 
   const {
     execute: createProduct,
@@ -45,6 +46,7 @@ function AddProductPage() {
   useEffect(() => {
     if (!createdProduct) return
     setFormKey((prevKey) => prevKey + 1)
+    handleReset()
   }, [createdProduct])
 
   const handleTitleChange = (event) => {
@@ -58,9 +60,20 @@ function AddProductPage() {
     }
   }
 
+  const handleTitleBlur = () => {
+    setTitleTouched(true)
+
+    if (titleValue.trim().length < 6) {
+      setTitleError('El título debe tener al menos 6 caracteres')
+    } else {
+      setTitleError('')
+    }
+  }
+
   const handleReset = () => {
     setTitleValue('')
     setTitleError('')
+    setTitleTouched(false)
   }
 
   return (
@@ -82,9 +95,10 @@ function AddProductPage() {
                 placeholder="Zapatillas Voladoras"
                 value={titleValue}
                 onChange={handleTitleChange}
+                onBlur={handleTitleBlur}
                 required
               />
-              {titleError && <p className="form-helper error">{titleError}</p>}
+              {titleTouched && titleError && <p className="form-helper error">{titleError}</p>}
             </div>
             <div className="form-field">
               <label htmlFor="price">Precio</label>
@@ -124,7 +138,7 @@ function AddProductPage() {
             </div>
           </div>
           <div className="form-actions">
-            <button type="submit" className="primary-button" disabled={submitting || titleError}>
+            <button type="submit" className="primary-button" disabled={submitting || (titleTouched && titleError)}>
               {submitting ? 'Guardando...' : 'Guardar Producto'}
             </button>
             <button type="reset" className="secondary-button" disabled={submitting}>
