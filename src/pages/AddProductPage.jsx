@@ -11,6 +11,8 @@ function AddProductPage() {
   const categoriesError = error ? 'Error al cargar categorías' : null
 
   const [formKey, setFormKey] = useState(0)
+  const [titleValue, setTitleValue] = useState('')
+  const [titleError, setTitleError] = useState('')
 
   const {
     execute: createProduct,
@@ -21,6 +23,11 @@ function AddProductPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+
+    if (titleValue.trim().length < 6) {
+      setTitleError('El título debe tener al menos 6 caracteres')
+      return
+    }
 
     const formData = new FormData(e.target)
     const productData = {
@@ -40,6 +47,22 @@ function AddProductPage() {
     setFormKey((prevKey) => prevKey + 1)
   }, [createdProduct])
 
+  const handleTitleChange = (event) => {
+    const value = event.target.value
+    setTitleValue(value)
+
+    if (value.trim().length < 6) {
+      setTitleError('El título debe tener al menos 6 caracteres')
+    } else {
+      setTitleError('')
+    }
+  }
+
+  const handleReset = () => {
+    setTitleValue('')
+    setTitleError('')
+  }
+
   return (
     <div className="add-product-page">
       <div className="add-product-card">
@@ -48,11 +71,20 @@ function AddProductPage() {
           <h1>Agregar nuevo producto</h1>
           <p className="add-product-subtitle">Completa los datos del producto para publicarlo en la tienda.</p>
         </div>
-        <form className="add-product-form" onSubmit={handleSubmit} key={formKey}>
+        <form className="add-product-form" onSubmit={handleSubmit} onReset={handleReset} key={formKey}>
           <div className="form-grid">
             <div className="form-field">
               <label htmlFor="title">Título</label>
-              <input type="text" id="title" name="title" placeholder="Zapatillas Voladoras" required />
+              <input
+                type="text"
+                id="title"
+                name="title"
+                placeholder="Zapatillas Voladoras"
+                value={titleValue}
+                onChange={handleTitleChange}
+                required
+              />
+              {titleError && <p className="form-helper error">{titleError}</p>}
             </div>
             <div className="form-field">
               <label htmlFor="price">Precio</label>
@@ -92,7 +124,7 @@ function AddProductPage() {
             </div>
           </div>
           <div className="form-actions">
-            <button type="submit" className="primary-button" disabled={submitting}>
+            <button type="submit" className="primary-button" disabled={submitting || titleError}>
               {submitting ? 'Guardando...' : 'Guardar Producto'}
             </button>
             <button type="reset" className="secondary-button" disabled={submitting}>
