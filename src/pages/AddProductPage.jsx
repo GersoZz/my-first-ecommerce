@@ -18,7 +18,7 @@ function AddProductPage() {
   const {
     execute: createProduct,
     data: createdProduct,
-    loading: submitting,
+    isLoading: submitting,
     error: submitError,
   } = usePost(API_ENDPOINTS.PRODUCTS)
 

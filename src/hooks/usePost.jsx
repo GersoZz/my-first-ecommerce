@@ -2,10 +2,13 @@ import { useState } from 'react'
 
 function usePost(url) {
   const [data, setData] = useState(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
 
   const execute = (payload) => {
+    setData(null)
+    setIsLoading(true)
+    setError(null)
     fetch(url, {
       method: 'POST',
       headers: {
