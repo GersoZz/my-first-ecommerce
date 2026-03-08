@@ -37,6 +37,11 @@ function HomePage() {
     setShowPromo(false)
   }
 
+  const container__description = {
+    textAlign: 'center',
+    marginBottom: '1rem',
+  }
+
   return (
     <>
       {showPromo && <PromoBanner onClose={onClose} />}
@@ -47,21 +52,21 @@ function HomePage() {
 
       {!errorProducts && (
         <Container title="Productos disponibles">
-          <p style={{ textAlign: 'center', marginBottom: '1rem' }}>Estos son los productos que puedes comprar</p>
+          <p style={container__description}>Estos son los productos que puedes comprar</p>
           {isLoadingProducts ? <Loader /> : <ProductList productsData={productsData} />}
         </Container>
       )}
 
       {!errorSuggested && (
         <Container title="Productos sugeridos">
-          <p style={{ textAlign: 'center', marginBottom: '1rem' }}>Explora nuestra selección de productos</p>
+          <p style={container__description}>Explora nuestra selección de productos</p>
           {isLoadingSuggested ? <Loader /> : <ProductList productsData={productsSuggestedData} />}
         </Container>
       )}
 
       {!errorSnacks && (
         <Container title="Productos snacks">
-          <p style={{ textAlign: 'center', marginBottom: '1rem' }}>Explora nuestra selección de snacks</p>
+          <p style={container__description}>Explora nuestra selección de snacks</p>
           {isLoadingSnacks ? <Loader /> : <ProductList productsData={productsSnacksData} />}
         </Container>
       )}
